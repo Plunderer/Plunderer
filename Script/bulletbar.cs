@@ -3,7 +3,9 @@ using UnityEngine.UI;
 using System.Collections;
 //0.11~0.625~0.75
 public class bulletbar : MonoBehaviour {
-	Image image;
+	//以前までは残弾ゲージだったが、
+    //途中から残弾数の表示に切り替わった為bulletbarという名前のまま
+    Image image;
 	PlayerController    playerController;
 	float ammopa;
     Text text;
