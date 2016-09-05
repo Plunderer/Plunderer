@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class AdvantageShift : MonoBehaviour {
-	//アドバンテージシフト（変形）に使用したスクリプト
+	//アドバンテージシフト（変形）に使用したスクリプト 
 	PlayerController    playerController;
 	PlayerLife    playerLife;
 	float ads = 1;
