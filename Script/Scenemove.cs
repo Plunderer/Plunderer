@@ -3,6 +3,9 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+//通常ステージのシーンからボスステージのシーンに移動するスクリプト
+//プレイヤーを破棄せずシーンを移動し、ボス開始の演出用のスタート地点に移動する。
+//そのあとに、ボス開始用のスクリプトを起動する。
 public class Scenemove : MonoBehaviour
 {
     GameObject player;
