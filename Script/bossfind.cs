@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+//ボス版プレイヤー発見スクリプト
+//呼び出すスクリプトが異なるだけで基本的には通常のfind.csと同じもの
 public class bossfind : MonoBehaviour
 {
     EnemyMove enemyMove;
