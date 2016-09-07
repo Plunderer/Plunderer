@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+//ボス版プレイヤー捜索用スクリプト
+//プレイヤーの座標に向かって移動し、視界にプレイヤーが入ったら攻撃パターンを開始する
 public class sousaku : MonoBehaviour 
 {
 	float enemyspeed; //移動速度
@@ -26,15 +27,6 @@ public class sousaku : MonoBehaviour
 	{
 		enemyMove = GetComponent<EnemyMove>();
         bossMove = GetComponent<boss1_new>();
-        if (bossMove.find != 1)
-		{
-			this.transform.position += transform.forward * (enemyspeed * Time.deltaTime);
-			if (pattern == 0)
-			{
-				pattern = 1;
-				StartCoroutine ("sosaku");
-			}
-		}
         if (bossMove.find != 1)
         {
             this.transform.position += transform.forward * (enemyspeed * Time.deltaTime);
