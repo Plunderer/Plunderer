@@ -3,6 +3,9 @@ using UnityEngine.UI;
 using System.Collections;
 
 public class PlayerLife : MonoBehaviour {
+	//主人公のライフ関係を取り扱う
+	//ゲームオーバー時の演出や、廃材を拾ってライフの回復、
+	//延焼によるスリップダメージの処理も行う
 	AdvantageShift    advantageshift;
 	public float maxLife = 100;    //最大体力（readonlyは変数の変更ができなくなる）
 	public float life = 100;    //現在体力
