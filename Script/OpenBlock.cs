@@ -2,6 +2,8 @@
 using System.Collections;
 
 public class OpenBlock : MonoBehaviour {
+    //フィールドに敵を出し過ぎない為、
+    //エリアを抜けるとそれまでの敵を非表示にし、新しく敵を表示する。
     public GameObject openblock;
     public GameObject closeblock;
     void OnTriggerEnter(Collider col) {
