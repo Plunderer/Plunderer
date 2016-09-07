@@ -3,6 +3,7 @@ using System.Collections;
 
 public class Enemy : MonoBehaviour 
 {
+	//敵の体力や、武器のドロップ関係を管理している。
     EffekseerEmitter effekseerEmitter;
     // 障壁へのダメージ関数
     public int n = 25;
@@ -120,10 +121,10 @@ public class Enemy : MonoBehaviour
             if (stunlife <= 0 && stunlife != -1)
             {
                 //体力が0以下になった時
-                drop(); //死亡処理
+                drop(); //武器ドロップ処理
             }
         }
-	}
+    }
 	public void brundamage ( float brundamage ) 
     {
 		bruntime = 5;
@@ -153,6 +154,7 @@ public class Enemy : MonoBehaviour
             Destroy (this.gameObject);   //自身を削除
 		}
 	}
+	//武器のドロップ
 	void dropwepon ()
     {
         enemyMove = GetComponent<EnemyMove>();
