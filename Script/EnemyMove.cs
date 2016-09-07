@@ -2,6 +2,10 @@
 using System.Collections;
 
 public class EnemyMove : MonoBehaviour {
+	
+　　//ザコ敵の行動全般を管理するスクリプト・・・だったのだが、
+　　//行動パターンはEnemyPattern.csで管理し、移動はnavimeshを使用するようになってしまった為、
+　　//射撃を行うことのみに機能が絞られた。
     public GameObject muzzleflash;    //マズルフラッシュ
     public float speed = 1000; //移動速度
 	public float rotationSpeed = 170;
