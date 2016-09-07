@@ -2,6 +2,7 @@
 using System.Collections;
 
 public class EnemySpawner : MonoBehaviour {
+　　//ボス戦で武器を所持したザコ敵をスポーンさせるためのもの。
     public Transform[] spawnpoint;
     public GameObject[] spawnenemy;
     int rd,erd,prd;
