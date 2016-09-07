@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+//ステージに置いた複数の空のgameobjectの座標を巡回するスクリプト
+//実はもう一つの企画の「オブサーバー」からの借り物（山口さんの制作物）
 public class haikai: MonoBehaviour {
 
 	public Transform[] wayPoints;
