@@ -2,6 +2,7 @@
 using System.Collections;
 
 public class shild : MonoBehaviour {
+    //タンク形態でのシールドによるダメージの減少のスクリプト
     PlayerLife playerlife;
     AdvantageShift ads;
     GameObject obj;
