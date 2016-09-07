@@ -1,7 +1,8 @@
 ﻿using UnityEngine; 
 using System.Collections;
 using UnityEngine.UI;
-
+//ゲーム開始時のシャッターが開き、光が差し込むシーン
+//演出中にロードを行い、ステージへの移行をスムーズにしている
 public class start : MonoBehaviour {
     public GameObject shatta;
     public Text buttontext;
@@ -23,8 +24,8 @@ public class start : MonoBehaviour {
     }
     IEnumerator FadeOut()
     {
-        AsyncOperation async = Application.LoadLevelAsync("newstage1");//シーンのロード
-        async.allowSceneActivation = false;//だがまだシーンの移動はしない
+        AsyncOperation async = Application.LoadLevelAsync("newstage1"); //シーンのロード
+        async.allowSceneActivation = false;                             //だがまだシーンの移動はしない
         while (a <= 1)//タイトルロゴとスイッチのフェードアウト
         {
             a += 0.1f;
