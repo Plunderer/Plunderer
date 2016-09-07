@@ -2,7 +2,8 @@
 using System.Collections;
 
 public class shouheki : MonoBehaviour {
-
+//プレイヤーを進ませすぎないための障害となる障壁システム
+//一部の対応した敵を倒すか直接攻撃することで破壊できる
 	public GameObject explosion;    //爆発エフェクト
 	public GameObject item;
 	private bool isQuitting = false;
