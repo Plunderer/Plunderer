@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+//主人公機から発生するレーザーサイトのスクリプト
+//Rayを飛ばし、そのRayに色をつけている
 public class lasersight : MonoBehaviour
 {
     public LineRenderer lineRenderer = null;
