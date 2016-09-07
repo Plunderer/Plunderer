@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+//視覚判定内に敵が入り、かつ敵自身とプレイヤーの間に障害物がない場合、
+//発見し行動パターンを起動する。
+//ちなみにもう一つの企画の「オブサーバー」でもほぼ同じものを使用している。
 public class find : MonoBehaviour
 {
     GameObject enemy;
