@@ -1,10 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnitySampleAssets.CrossPlatformInput;
-/// <summary>
-/// 若かりし頃の過ちであった。
-/// 主人公の向きと射撃を行います。
-/// </summary>
+// 主人公の向きと射撃を行います。
 public class PlayerController : MonoBehaviour {
     public GameObject muzzleflash1;    //マズルフラッシュ
     public GameObject muzzleflash2;    //マズルフラッシュ
