@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 
+//ステージ移動後カメラを指定の位置に移動させるスクリプト
 public class misionstart : MonoBehaviour {
 	GameObject camera,p1,p2,subcamera,wepon,button1,button2,s;
 	PlayerController playerController;
