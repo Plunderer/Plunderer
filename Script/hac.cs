@@ -3,6 +3,9 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 
+//画面をタップした際、その場所に敵がいればその敵にマーカーを付加させ、
+//形態ごとの効果を発動するスクリプト
+//何もない場所をタップした場合かエネルギーゲージがなくなった時は効果が切れる。
 public class hac : MonoBehaviour
 {
     /// <summary>
@@ -111,15 +114,18 @@ public class hac : MonoBehaviour
     {
         if(!jack){
             jack = true;
+            //ドミネーター形態だった場合、敵を一時的に味方につけるスクリプトを起動する
             enemy.AddComponent<jackenemy>().Hac = this;
         }
     }
     void rockon()
     {
+        //ラピッド形態だった場合、自機の向きが敵を向き続けるようになる
         player.transform.LookAt(enemy.transform);
     }
     void baria()
     {
+        //タンク形態だった場合、シールドを敵に向け、シールドのスクリプトを起動する。
         shildarmbool = true;
         shild.SetActive(true);
         shild.transform.LookAt(enemy.transform);
