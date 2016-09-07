@@ -4,6 +4,8 @@ using System.Collections;
 public class boss1enemy : MonoBehaviour 
 {
     // ボスのライフ関係の処理
+    //武器の所持状況なども取扱い、武器がなくなると撃破と同じ演出を行う
+    //Enemy.csをベースにしている
     public int st = 0;
     // st=2:武器無傷　=1:武器奪われずみ
     public int dropCount = 2;
