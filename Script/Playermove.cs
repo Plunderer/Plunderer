@@ -3,6 +3,8 @@ using System.Collections;
 using UnitySampleAssets.CrossPlatformInput;
 public class Playermove: MonoBehaviour 
 {
+	//プレイヤーの移動を管理している。
+	
 	AdvantageShift    advantageshift;
 	PlayerLife    playerLife;
 	public float speed = 187.5f;
