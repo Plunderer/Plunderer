@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+//デトネーター形態の時、タップされた敵を一時的に味方につけるスクリプト
+//発動中はタップした敵のtagをEnemyからPlayerに切り替え、他の敵からも狙われるようにし、
+//さらに攻撃対象をPlayerから発動時一番近いEnemyをターゲットとすることで同士討ちを狙わせる。
 public class jackenemy : MonoBehaviour {
     EnemyPattern enemyPattern;
     haikai Haikai;
