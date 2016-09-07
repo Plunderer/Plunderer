@@ -2,6 +2,7 @@
 using System.Collections;
 
 public class weponchange : MonoBehaviour {
+	
 	PlayerController    playerController;
 	public float a = 1;
 	public GameObject wepon;
@@ -10,20 +11,16 @@ public class weponchange : MonoBehaviour {
 
 	public Transform player;
 	public Transform gun;
-
-	
-
-	void start(){
-		GameObject obj = GameObject.Instantiate (wepon)as GameObject;
-		obj.transform.parent = GameObject.Find("hand").transform;
-	}
-
-	void Update() {
-
+	//左上のボタンをタップすることで武器を切り替えるスクリプト。
+	//また、イーグルアイという武器のみ、カメラが離れる仕様になっている。
+	void Start(){
 		GameObject obj = GameObject.Find ("Player");
 		player = GameObject.FindGameObjectWithTag("Player").transform;
 		Vector3 playerPos = player.position;
 		playerController = obj.GetComponent<PlayerController> ();
+	}
+	void Update() {
+		//イーグルアイを構えている時のみカメラを離す、あるいは近づける
 		outsidegun = playerController.outsidegun;
 		wepontype = playerController.wepontype;
 		if (EagleEye == 0) {
@@ -51,6 +48,7 @@ public class weponchange : MonoBehaviour {
 		}
 	}
 	
+	//ボタンが押された時、可能なら武器を切り替える
 	public void ButtonPush() {
 		b = playerController.outsidegun;
 		c = playerController.insidegun;
