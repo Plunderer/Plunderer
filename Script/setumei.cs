@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine.UI;
 
 public class setumei : MonoBehaviour {
+//チュートリアル文を表示するスクリプト
     public Image setumeiimage;
     public Image setumeiimage2;
     public GameObject text;
