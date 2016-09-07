@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
-//0.11~0.625~0.75
+//残りライフに応じてライフバーの針を移動させる
 public class Lifebar2: MonoBehaviour {
 	PlayerLife    playerLife;
 	float lifepa;
