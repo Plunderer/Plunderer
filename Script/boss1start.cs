@@ -2,6 +2,9 @@
 using System.Collections;
 using UnityEngine.UI;
 
+//ボス登場シーンのスクリプト
+//ボスがガトリングをチャージしてから掃射するという行動パターンだということを
+//プレイヤーに知ってもらうための演出
 public class boss1start : MonoBehaviour {
 	GameObject p1,p2,subcamera,wepon,button1,button2,s;
 	PlayerController playerController;
@@ -29,6 +32,7 @@ public class boss1start : MonoBehaviour {
     bool gatomode = false;
 	// Use this for initialization
 	void Start () {
+	//UIをすべて非表示に
         transform.localPosition = new Vector3(917.59f, -28.71f, 2138.7f);
         camera = GameObject.Find("Main Camera");
         BGM = camera.GetComponents<AudioSource>();
@@ -47,6 +51,7 @@ public class boss1start : MonoBehaviour {
     }
     void Update()
     {
+    	//ガトリング掃射のタイミングでガトリングを撃たせる。それまでは待機。
         cameraposi1 = new Vector3(gameObject.transform.position.x+1, gameObject.transform.position.y+1, gameObject.transform.position.z-3);
         if (gatomode)
         {
@@ -67,8 +72,10 @@ public class boss1start : MonoBehaviour {
     {
         yield return new WaitForSeconds(1.5f);
         camera.SetActive(false);
+        //カメラをムービー用に切り替える
         while (b <= 1)
         {
+            //フェードインを行いつつ主人公を移動
             b += 0.01f;
             GetComponent<Rigidbody>().AddForce(gameObject.transform.forward * 1.5f, ForceMode.VelocityChange);
             moviecamera = GameObject.Find("MoivieCamera");
@@ -80,18 +87,22 @@ public class boss1start : MonoBehaviour {
         }
         for (int i = 0; i <60 ; i++)
         {
+        　  //主人公を指定地点に移動
             GetComponent<Rigidbody>().AddForce(gameObject.transform.forward * 1.5f, ForceMode.VelocityChange);
             moviecamera.transform.LookAt(gameObject.transform.position);
             yield return null;
         }
+        //ムービーカメラを主人公の目の前に移動する
         iTween.MoveTo(moviecamera, cameraposi1, 3f);
         zako = GameObject.Find("zako");
         for (int i = 0; i < 270; i++)
         {
+        　  //ムービーカメラにザコ敵の場所を向かせる
             moviecamera.transform.LookAt(zako.transform.position);
             yield return null;
         }
         boss = GameObject.Find("boss");
+        //ボスをザコ敵の少し後ろである指定地点に移動
         Vector3 pos = boss.transform.position;
         pos.x -= 13;
         agent = boss.GetComponent<NavMeshAgent>();
@@ -100,7 +111,8 @@ public class boss1start : MonoBehaviour {
         Camera camerrua = moviecamera.GetComponent<Camera>();
         yield return new WaitForSeconds(2.8f);
         agent.SetDestination(boss.transform.position);
-        for (int i = 0; i < 10; i++)//ボス見つつズームイン
+        for (int i = 0; i < 10; i++)
+        //ボス見つつズームイン
         {
             moviecamera.transform.LookAt(boss.transform.position);
             camerrua.fieldOfView -= 2.5f;
@@ -115,6 +127,7 @@ public class boss1start : MonoBehaviour {
             yield return null;
         }
         bosscon = boss.GetComponent<boss1_new>();
+        //ガトリングチャージ音再生
         bosscon.sound02.PlayOneShot(bosscon.sound02.clip);
         yield return new WaitForSeconds(1.5f);
         for (int i = 0; i < 2; i++)
@@ -123,17 +136,21 @@ public class boss1start : MonoBehaviour {
             yield return null;
         }
         yield return new WaitForSeconds(0.5f);
+        //主人公に横に移動（回避）させる
         GetComponent<Rigidbody>().AddForce(gameObject.transform.right * 400, ForceMode.VelocityChange);
-        gatomode = true;
+        gatomode = true;//Updateにあるガトリング掃射を許可する
         yield return new WaitForSeconds(4f);
         iTween.MoveTo(moviecamera, cameraposi1, 3f);
         moviecamera.SetActive(false);
         camera.SetActive(true);
+        //BGMをボス用のものに切り替える
         BGM[0].Stop();
         BGM[1].Play();
         StartCoroutine("start");
     }
     IEnumerator start(){
+    	//カメラをプレイヤーのものに戻し、少し遠ざける
+    	//操作を可能にし、プレイを再開
         boss.GetComponent<boss1_new>().enabled = true;
         iTween.RotateTo(camera, iTween.Hash("x", camerarotationX, "time", 0.6f));
         Vector3 pos = camera.transform.position;
@@ -156,6 +173,8 @@ public class boss1start : MonoBehaviour {
     }
     void gato()
     {
+    	//ガトリングを掃射させるもの
+    	//Enemyにもあるものとほとんど同じだが、弾のバラつきを少し調節している
         GameObject obj = GameObject.Instantiate(bosscon.Gato) as GameObject;
         GameObject obj2 = GameObject.Instantiate(bosscon.Gato) as GameObject;
         obj.transform.position = bosscon.spawn.position;
