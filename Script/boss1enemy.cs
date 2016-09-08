@@ -30,8 +30,10 @@ public class boss1enemy : MonoBehaviour
     float Drop = 1;
     int rd;
     public GameObject wgato;
+    GameObject player;
     void Start()
     {
+    	player=GameObject.Find("PlayerMove");
         boss = GetComponent<boss1_new>();
     }
     void Update()
@@ -143,6 +145,7 @@ public class boss1enemy : MonoBehaviour
         {
             q = 1;
             GameObject.Instantiate(explosion, transform.position, Quaternion.identity); // 爆発パーティクルを生成
+            player.AddComponent<goal>();//クリア時の演出を追加
             Destroy(this.gameObject); // 自身を削除
         }
     }
