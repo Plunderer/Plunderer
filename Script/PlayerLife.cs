@@ -1,11 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
-
+using UnitySampleAssets.CrossPlatformInput;
 public class PlayerLife : MonoBehaviour {
-	//主人公のライフ関係を取り扱う
-	//ゲームオーバー時の演出や、廃材を拾ってライフの回復、
-	//延焼によるスリップダメージの処理も行う
 	AdvantageShift    advantageshift;
 	public float maxLife = 100;    //最大体力（readonlyは変数の変更ができなくなる）
 	public float life = 100;    //現在体力
@@ -18,14 +15,15 @@ public class PlayerLife : MonoBehaviour {
 	private GUIStyle style;
 	private AudioSource sound01,sound02,sound03,sound04;
 	float bruntime,brundamage2,time;
-	float adsd = 1;
+	float adsd = 1,adsh=1;
     AudioSource bgm_se;
     public GameObject explosion1, explosion2;
     public Image fede;
     bool gameoverbool = false;
+    public GameObject maincamera;
     // Use this for initialization
     void Start () {
-		GameObject ads = GameObject.Find ("PlayerMove");
+        GameObject ads = GameObject.Find ("PlayerMove");
 		advantageshift = ads.GetComponent<AdvantageShift> ();
 		style = new GUIStyle();
 		style.fontSize = 100;
@@ -43,24 +41,38 @@ public class PlayerLife : MonoBehaviour {
 	// Update is called once per frame
 
 	void Update () {
-        if(advantageshift.advantageshift == 5){
-            adsd = 1.1f;
-        }
-		else if (advantageshift.advantageshift == 3) {
-			adsd = 1.3f;
-		}else if (advantageshift.advantageshift == 2) {
-			adsd = 0.7f;
-        }else if (advantageshift.advantageshift == 1)
+        float horizontal = CrossPlatformInputManager.GetAxisRaw("Horizontal");
+        float vertical = CrossPlatformInputManager.GetAxisRaw("Vertical");
+        if (advantageshift.advantageshift == 0 || advantageshift.advantageshift == -1)
         {
             adsd = 1.2f;
+            adsh = 1f;
         }
-		else {
-			adsd = 1;
-		}
+		else if (advantageshift.advantageshift == 1) {
+			adsd = 1f;
+            adsh = 1.5f;
+		}else if (advantageshift.advantageshift == 2) {
+			adsd = 0.7f;
+            adsh = 1f;
+        }
 		time += Time.deltaTime;
 		if (time >= 1) {
+            if (horizontal == 0 && vertical == 0)
+            {
+                if (life < 30) {
+                    life ++;
+                }
+                if (hacgage < 1000)
+                {
+                    hacgage += 10;
+                }
+                else
+                {
+                    hacgage = 1000;
+                }
+            }
 			if (bruntime > 0) {
-				life -= brundamage2;
+				life -= brundamage2/1.3f;
 				bruntime -= 1;
 			}
 			time = 0;
@@ -76,11 +88,13 @@ public class PlayerLife : MonoBehaviour {
 
 	public void Damage (float damage) {
 		sound01.PlayOneShot (sound01.clip);
-		life -= Mathf.Round(damage * adsd); //体力を減らす
+        shake(damage);
+		life -= Mathf.Round((damage * adsd)/1.5f); //体力を減らす
 	}
 	public void heal (float heal) {
 		sound02.PlayOneShot (sound02.clip);
-		life += Mathf.Round(heal); //体力を減らす
+		life += Mathf.Round(heal); //体力を増やす
+        adsh = 1.5f;
 	}
 	public void brundamage ( float brundamage ) {
 		bruntime = 3;
@@ -109,5 +123,10 @@ public class PlayerLife : MonoBehaviour {
         }
         yield return new WaitForSeconds(3f);
         Application.LoadLevel("title");
+    }
+    void shake(float Damage_)
+    {
+        iTween.ShakeRotation(maincamera, iTween.Hash("x", Damage_/10, "y", Damage_/10, "time", Damage_ / 8));
+        
     }
 }

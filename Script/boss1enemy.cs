@@ -4,8 +4,6 @@ using System.Collections;
 public class boss1enemy : MonoBehaviour 
 {
     // ボスのライフ関係の処理
-    //武器の所持状況なども取扱い、武器がなくなると撃破と同じ演出を行う
-    //Enemy.csをベースにしている
     public int st = 0;
     // st=2:武器無傷　=1:武器奪われずみ
     public int dropCount = 2;
@@ -29,36 +27,20 @@ public class boss1enemy : MonoBehaviour
     float adss = 1;
     float Drop = 1;
     int rd;
-    public GameObject wgato;
     GameObject player;
+    public GameObject wgato;
+    private AudioSource sound01;
     void Start()
     {
-    	player=GameObject.Find("PlayerMove");
+        AudioSource[] audioSources = GetComponents<AudioSource>();
+        sound01 = audioSources[2];
+        player =GameObject.Find("PlayerMove");
         boss = GetComponent<boss1_new>();
     }
     void Update()
     {
         GameObject ads = GameObject.Find("PlayerMove");
         advantageshift = ads.GetComponent<AdvantageShift>();
-        if(advantageshift.advantageshift == 1)
-        {
-            adss = 1.2f;
-            adsd = 0.8f;
-        }
-        else if(advantageshift.advantageshift == 3)
-        {
-            adss = 1.1f;
-            adsd = 1.1f;
-        }
-        else if(advantageshift.advantageshift == 5)
-        {
-            adsd = 1.3f;
-        }
-        else
-        {
-            adss = 1;
-            adsd = 1;
-        }
         time += Time.deltaTime;
 
         if(time >= 1)
@@ -94,6 +76,7 @@ public class boss1enemy : MonoBehaviour
 
     public void Damage(float damage)
     {
+        sound01.Play();
         life -= damage * adsd; // 体力から差し引く
 
         if (life <= 0)
@@ -145,7 +128,7 @@ public class boss1enemy : MonoBehaviour
         {
             q = 1;
             GameObject.Instantiate(explosion, transform.position, Quaternion.identity); // 爆発パーティクルを生成
-            player.AddComponent<goal>();//クリア時の演出を追加
+            player.AddComponent<goal>();
             Destroy(this.gameObject); // 自身を削除
         }
     }

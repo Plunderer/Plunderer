@@ -2,7 +2,6 @@
 using System.Collections;
 using UnityEngine.UI;
 
-//ステージ移動後カメラを指定の位置に移動させるスクリプト
 public class misionstart : MonoBehaviour {
 	GameObject camera,p1,p2,subcamera,wepon,button1,button2,s;
 	PlayerController playerController;
@@ -14,6 +13,12 @@ public class misionstart : MonoBehaviour {
 	public float camerarotationX = 60f;
     public Image fede;
 	Hashtable table = new Hashtable();
+    public enum starttype
+    {
+        nomal,
+        talkevent
+    }
+    public starttype st;
 
 	// Use this for initialization
 	void Start () {
@@ -21,8 +26,8 @@ public class misionstart : MonoBehaviour {
             fede.color = new Color(0, 0, 0, 1);
         }
         camera = GameObject.Find("Main Camera");
+        if (st == starttype.talkevent) GetComponent<talk>().talkstart();
         StartCoroutine("start");
-        Setumei=gameObject.GetComponent<setumei>();
 	}
 	IEnumerator start(){
         iTween.RotateTo(camera, iTween.Hash("x", camerarotationX, "time", 0.6f));
@@ -41,7 +46,7 @@ public class misionstart : MonoBehaviour {
         }
 		yield return new WaitForSeconds(2.0f);
         fede.enabled = false;
-        Setumei.StartCoroutine("setumeikaisi");
-        this.GetComponent<misionstart>().enabled = false;
+        Destroy(this);
     }
+
 }

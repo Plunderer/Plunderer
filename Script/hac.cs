@@ -3,9 +3,6 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 
-//画面をタップした際、その場所に敵がいればその敵にマーカーを付加させ、
-//形態ごとの効果を発動するスクリプト
-//何もない場所をタップした場合かエネルギーゲージがなくなった時は効果が切れる。
 public class hac : MonoBehaviour
 {
     /// <summary>
@@ -28,6 +25,7 @@ public class hac : MonoBehaviour
     public GameObject shild;
     public bool haconoff = false;
     bool jack = false;
+    public Sprite[] rockonsprite = new Sprite[2];
     void Start()
     {
         playermove = GameObject.Find("PlayerMove");
@@ -54,7 +52,7 @@ public class hac : MonoBehaviour
                 switch (ads.advantageshift)
                 {
                     case 0:
-                        playerlife.hacgage -= UnityEngine.Random.Range(0, 3);
+						if(UnityEngine.Random.Range(0, 3) == 0)playerlife.hacgage-- ;
                         if (shildarmbool)
                         {
                             shildarmbool = false;
@@ -63,7 +61,7 @@ public class hac : MonoBehaviour
                         rockon();
                         break;
                     case 1:
-                        playerlife.hacgage -= UnityEngine.Random.Range(0, 4);
+					if(UnityEngine.Random.Range(0, 3) == 0)playerlife.hacgage-- ;
                         if (shildarmbool)
                         {
                             shildarmbool = false;
@@ -72,7 +70,7 @@ public class hac : MonoBehaviour
                         AIhac();
                         break;
                     case 2:
-                        playerlife.hacgage -= UnityEngine.Random.Range(0, 3);
+					if(UnityEngine.Random.Range(0, 3) == 0)playerlife.hacgage-- ;
                         baria();
                         break;
                 }
@@ -95,10 +93,24 @@ public class hac : MonoBehaviour
         RaycastHit hit = new RaycastHit();
         if (Physics.Raycast(ray, out hit))
         {
+            Debug.Log(hit);
             obj = hit.collider.gameObject;
             if (obj.tag == "Enemy")
-
             {
+                switch (ads.advantageshift)
+                {
+                    case 0:
+                        rock.sprite = rockonsprite[0];
+                        break;
+                    case 1:
+                        rock.sprite = rockonsprite[1];
+                        break;
+                    case 2:
+                        rock.sprite = rockonsprite[2];
+                        break;
+                    default:
+                        break;
+                }
                 enemy = obj;
                 haconoff = true;
                 playercontroller.rockon = true;
@@ -114,18 +126,15 @@ public class hac : MonoBehaviour
     {
         if(!jack){
             jack = true;
-            //ドミネーター形態だった場合、敵を一時的に味方につけるスクリプトを起動する
             enemy.AddComponent<jackenemy>().Hac = this;
         }
     }
     void rockon()
     {
-        //ラピッド形態だった場合、自機の向きが敵を向き続けるようになる
         player.transform.LookAt(enemy.transform);
     }
     void baria()
     {
-        //タンク形態だった場合、シールドを敵に向け、シールドのスクリプトを起動する。
         shildarmbool = true;
         shild.SetActive(true);
         shild.transform.LookAt(enemy.transform);

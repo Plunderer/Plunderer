@@ -1,8 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnitySampleAssets.CrossPlatformInput;
-// 主人公の向きと射撃を行います。
+/// <summary>
+/// 若かりし頃の過ちであった。
+/// 主人公の向きと射撃を行います。
+/// </summary>
 public class PlayerController : MonoBehaviour {
+	public Joystick joystick;
     public GameObject muzzleflash1;    //マズルフラッシュ
     public GameObject muzzleflash2;    //マズルフラッシュ
     public float rotationSpeed = 450;
@@ -74,7 +78,7 @@ public class PlayerController : MonoBehaviour {
 	public float MAXammo2;
 	private GUIStyle style;
     public bool rockon = false;
-    
+    public bool stop = false;
 	//以下修正された変数
 	public Transform rifle; //搭載兵器（弾無限の方の武器）
     public Transform rifle2; //状況兵器（弾に限ろがある方の武器）
@@ -162,9 +166,10 @@ public class PlayerController : MonoBehaviour {
 		time += Time.deltaTime;
 		Vector3 input = new Vector3 (CrossPlatformInputManager.GetAxisRaw ("Horizontal2"), 0, CrossPlatformInputManager.GetAxisRaw ("Vertical2"));
 		Vector3 input2 = new Vector3 (CrossPlatformInputManager.GetAxisRaw ("Horizontal"), 0, CrossPlatformInputManager.GetAxisRaw ("Vertical"));
-		if (input != Vector3.zero) {
+        if (!stop &&input != Vector3.zero || joystick.pointeruo)
+        {
 			time2 += Time.deltaTime;
-            if (rockon == false || advantageshift.advantageshift != 0)
+			if ((rockon == false || advantageshift.advantageshift != 0)&&!joystick.pointeruo)
             {
 			    targetRotation = Quaternion.LookRotation (input);
 			    transform.eulerAngles = Vector3.up * Mathf.MoveTowardsAngle (transform.eulerAngles.y, targetRotation.eulerAngles.y, rotationSpeed * Time.deltaTime);
@@ -605,7 +610,7 @@ public class PlayerController : MonoBehaviour {
                             {
                                 ammo -= 1;
                                 GameObject obj = GameObject.Instantiate(heby) as GameObject;
-                                obj.transform.position = spawn.position;
+                                obj.transform.position = spawn2.position;
                                 obj.GetComponent<Rigidbody>().AddForce(rifle.forward * speed * 2.2f);
                                 time = 0f;  //初期化
                                 sound01.PlayOneShot(sound01.clip);
@@ -754,7 +759,7 @@ public class PlayerController : MonoBehaviour {
 			time2 = 0;
 			time3 = 0;
             chagesound = 0;
-            if (input2 != Vector3.zero) {
+            if (!stop && input2 != Vector3.zero) {
                 if (rockon == false || advantageshift.advantageshift != 0)
                 {
                     targetRotation = Quaternion.LookRotation(input2);
@@ -787,6 +792,8 @@ public class PlayerController : MonoBehaviour {
 		wVoltaic.SetActiveRecursively(false);
         wGato.SetActiveRecursively(false);
         wVoltaic.SetActiveRecursively(false);
+        wHighcanon.SetActiveRecursively(false);
+        wSurabure.SetActiveRecursively(false);
         if (insidegun == 0)
         {
             wmachingun.SetActiveRecursively(true);

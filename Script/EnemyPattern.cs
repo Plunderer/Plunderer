@@ -43,36 +43,39 @@ public class EnemyPattern : MonoBehaviour {
         enemyMove = gameObject.GetComponent<EnemyMove>();
     }
     public void patanhandan () {
-        switch (enemytype)
+        if (!enemyMove.shotPermit)
         {
-            //enumクラス名.文字列でアクセスする
-            case Enemytype.Fixing:
-                StartCoroutine("Fixing");
-                break;
-            case Enemytype.Rotation:
-                StartCoroutine("Rotation");
-                break;
-            case Enemytype.Patrol:
-                StartCoroutine("Patrol");
-                break;
-            case Enemytype.DestructPatrol:
-                StartCoroutine("DestructPatrol");
-                break;
-            case Enemytype.TrackingWait:
-                StartCoroutine("TrackingWait");
-                break;
-            case Enemytype.AwayWait:
-                StartCoroutine("AwayWait");
-                break;
-            case Enemytype.DestructTracking:
-                StartCoroutine("DestructTracking");
-                break;
-            case Enemytype.PatrolAway:
-                StartCoroutine("PatrolAway");
-                break;
-            default:
+            switch (enemytype)
+            {
+                //enumクラス名.文字列でアクセスする
+                case Enemytype.Fixing:
+                    StartCoroutine("Fixing");
+                    break;
+                case Enemytype.Rotation:
+                    StartCoroutine("Rotation");
+                    break;
+                case Enemytype.Patrol:
+                    StartCoroutine("Patrol");
+                    break;
+                case Enemytype.DestructPatrol:
+                    StartCoroutine("DestructPatrol");
+                    break;
+                case Enemytype.TrackingWait:
+                    StartCoroutine("TrackingWait");
+                    break;
+                case Enemytype.AwayWait:
+                    StartCoroutine("AwayWait");
+                    break;
+                case Enemytype.DestructTracking:
+                    StartCoroutine("DestructTracking");
+                    break;
+                case Enemytype.PatrolAway:
+                    StartCoroutine("PatrolAway");
+                    break;
+                default:
 
-                break;
+                    break;
+            }
         }
 	}
     IEnumerator Fixing()
@@ -95,7 +98,7 @@ public class EnemyPattern : MonoBehaviour {
         for (int i = 0; i < rimittime*60; i++)//設定した時間（rimittime）分だけ繰り返す
         {
             Vector3 newRotation = Quaternion.LookRotation(player.position - transform.position).eulerAngles;
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(newRotation), agent.angularSpeed);
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(newRotation), agent.angularSpeed / 180);
             yield return null;
             //transform.LookAt(new Vector3 (player.position.x,transform.position.y,player.position.z));   //プレイヤーの方を向き続ける
         }
@@ -183,9 +186,10 @@ public class EnemyPattern : MonoBehaviour {
         int l = 0;
         while (l < rimittime * 60)//設定した時間（rimittime）分だけ繰り返す
         {
-            time += Time.deltaTime;
-            transform.LookAt(new Vector3(player.position.x, transform.position.y, player.position.z));   //プレイヤーの方を向き続ける;   //プレイヤーの方を向く
-            this.transform.position -= transform.forward * (agent.speed * Time.deltaTime);//プレイヤーから距離を取る
+            //transform.LookAt(new Vector3(player.position.x, transform.position.y, player.position.z));   //プレイヤーの方を向き続ける;   //プレイヤーの方を向く
+            transform.rotation = Quaternion.Slerp(transform.rotation,
+                Quaternion.LookRotation(player.position - transform.position), agent.angularSpeed/180);
+			this.transform.position -= transform.forward * (Time.deltaTime*agent.speed);//プレイヤーから距離を取る
             if (!find) {
                 l++;
             }
@@ -235,7 +239,8 @@ public class EnemyPattern : MonoBehaviour {
         while (m < rimittime * 60)//設定した時間（rimittime）分だけ繰り返す
         {
             time += Time.deltaTime;
-            transform.LookAt(new Vector3(player.position.x, transform.position.y, player.position.z));//プレイヤーの方を向く
+            transform.rotation = Quaternion.Slerp(transform.rotation,
+                Quaternion.LookRotation(player.position - transform.position), agent.angularSpeed / 180);
             this.transform.position -= transform.forward * (agent.speed * Time.deltaTime);//プレイヤーから距離を取る
             if (!find)
             {

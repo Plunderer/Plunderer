@@ -1,12 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-//デトネーター形態の時、タップされた敵を一時的に味方につけるスクリプト
-//発動中はタップした敵のtagをEnemyからPlayerに切り替え、他の敵からも狙われるようにし、
-//さらに攻撃対象をPlayerから発動時一番近いEnemyをターゲットとすることで同士討ちを狙わせる。
 public class jackenemy : MonoBehaviour {
     EnemyPattern enemyPattern;
     haikai Haikai;
+    Enemy en;
     EnemyMove enemyMove;
     NavMeshAgent agent;
     Transform enemy;
@@ -15,20 +13,23 @@ public class jackenemy : MonoBehaviour {
     bool haikai = false, patan = false,agiento = false;
 	// Use this for initialization
 	void Start () {
+        en = gameObject.GetComponent<Enemy>();
+        if (en == null) gameObject.GetComponent<boss1enemy>(); 
         enemyPattern = gameObject.GetComponent<EnemyPattern>();
         ads = GameObject.Find("PlayerMove").GetComponent<AdvantageShift>();
         if (gameObject.GetComponent<EnemyPattern>())
         {
             patan = true;
         }
-        this.tag = ("Player");
+        //this.tag = ("Player");
         enemyPattern.player = serchTag(gameObject, "Enemy").transform;
 	}
 	
 	// Update is called once per frame
     void Update()
     {
-        gameObject.GetComponent<EnemyPattern>().find = true;
+        enemyPattern.find = true;
+        if (en.stunlife >1&&UnityEngine.Random.Range(0, 10) == 0) gameObject.SendMessage("stunDamage", 1); 
         if (!Hac.haconoff || ads.advantageshift != 1)
         {
             enemyPattern.find = false;

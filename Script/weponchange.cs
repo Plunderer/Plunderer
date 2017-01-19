@@ -1,26 +1,24 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class weponchange : MonoBehaviour {
-	
 	PlayerController    playerController;
 	public float a = 1;
 	public GameObject wepon;
 	float outsidegun , obj ,EagleEye ,wepontype ,b ,c;
 	GameObject camera;
-
+	public Text bulletp;
 	public Transform player;
 	public Transform gun;
-	//左上のボタンをタップすることで武器を切り替えるスクリプト。
-	//また、イーグルアイという武器のみ、カメラが離れる仕様になっている。
-	void Start(){
+
+
+	void Update() {
+
 		GameObject obj = GameObject.Find ("Player");
 		player = GameObject.FindGameObjectWithTag("Player").transform;
 		Vector3 playerPos = player.position;
 		playerController = obj.GetComponent<PlayerController> ();
-	}
-	void Update() {
-		//イーグルアイを構えている時のみカメラを離す、あるいは近づける
 		outsidegun = playerController.outsidegun;
 		wepontype = playerController.wepontype;
 		if (EagleEye == 0) {
@@ -46,13 +44,19 @@ public class weponchange : MonoBehaviour {
 				EagleEye = 0;
 			}
 		}
+		if (playerController.wepontype == 1) {
+			bulletp.color = new Color (15f/255f, 60/255f, 70/255f);
+		}
+		else{
+			bulletp.color = new Color (200/255f, 255/255f, 255/255f);
+		}
 	}
 	
-	//ボタンが押された時、可能なら武器を切り替える
 	public void ButtonPush() {
 		b = playerController.outsidegun;
 		c = playerController.insidegun;
 		if (b >= 1){
+			
 			if (a == 1){
 				a = 2;
 
@@ -63,7 +67,7 @@ public class weponchange : MonoBehaviour {
 			}
 			playerController.wepontype = a;
 			playerController.PlayAudio();
-
 		}
+
 	}
 }
