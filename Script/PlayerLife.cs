@@ -89,7 +89,7 @@ public class PlayerLife : MonoBehaviour {
 	public void Damage (float damage) {
 		sound01.PlayOneShot (sound01.clip);
         shake(damage);
-		life -= Mathf.Round((damage * adsd)/1.5f); //体力を減らす
+		life -= Mathf.Round((damage * adsd)); //体力を減らす
 	}
 	public void heal (float heal) {
 		sound02.PlayOneShot (sound02.clip);

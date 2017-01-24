@@ -68,7 +68,11 @@ public class talk : MonoBehaviour {
     {
         currentText = scenarios[currentLine];
         currentname = scenariosname[currentLine];
-        if (currentText == "tutorialend") { StartCoroutine("tutolialend"); }
+        if (currentText == "tutorialend") {
+            StartCoroutine("tutolialend");
+            gameObject.AddComponent<goal>();
+            close();
+        }
         else
         {
             timeUntilDisplay = currentText.Length * intervalForCharacterDisplay;

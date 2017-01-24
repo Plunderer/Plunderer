@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour {
 	private Quaternion targetRotation;
 	public float insidegun = 0;
 	public float outsidegun = 0;
-	public float wepontype = 1;
+	public int wepontype = 1;
 	public GameObject riflebullet;
 	public GameObject shotbullet;
 	public GameObject Laser;
@@ -88,16 +88,13 @@ public class PlayerController : MonoBehaviour {
 	public float interval = 0.2f;   //何秒おきに発砲するか
 	public float getgun;
     int mainas;
-	float a, b ,c,revot,X,Y,adsr, chagesound;
+	float a, b ,c,revot,X,Y,adsr =1, chagesound;
 	AdvantageShift    advantageshift;
     GameObject ads;
     int revo = 0;
     EffekseerEmitter effekseerEmitter1, effekseerEmitter2;
-    Animator animator;
-    public GameObject plunderer;
     // Use this for initialization
     void Start () {
-        animator = plunderer.GetComponent<Animator>();
         effekseerEmitter1 = muzzleflash1.GetComponent<EffekseerEmitter>();
         effekseerEmitter2 = muzzleflash2.GetComponent<EffekseerEmitter>();
         ads = GameObject.Find ("PlayerMove");
@@ -147,19 +144,6 @@ public class PlayerController : MonoBehaviour {
 			c = outsidegun;
 			weponDisplay ();
 		}
-        if (wepontype == 1)
-        {
-            animator.SetBool("outside", false);
-        }
-        else
-        {
-            animator.SetBool("outside", true);
-        }
-		if (advantageshift.advantageshift == 3) {
-			adsr = 0.8f;
-		} else {
-			adsr = 1;
-		}
 		if (ammo >= MAXammo) {
 			ammo = MAXammo;
 		}
@@ -178,7 +162,6 @@ public class PlayerController : MonoBehaviour {
 				time3 += Time.deltaTime;
                 if (wepontype == 1)
                 {
-                    animator.SetBool("outside",false);
                     if (insidegun == 0)
                     {
                         //インサイドガン
@@ -188,7 +171,8 @@ public class PlayerController : MonoBehaviour {
                             obj.transform.position = spawn.position;
                             obj.GetComponent<Rigidbody>().AddForce(rifle.forward * speed * 1.7f);
                             effekseerEmitter1.Play();
-                            time = 0f;  //初期化
+                            
+							time = 0f;  //初期化
                             sound01.PlayOneShot(sound01.clip);
                         }
                     }
@@ -783,7 +767,7 @@ public class PlayerController : MonoBehaviour {
 		wmisa.SetActiveRecursively(false);
 		wPulsemisa.SetActiveRecursively(false);
 		wScutum.SetActiveRecursively(false);
-		wrapid.SetActiveRecursively(false);
+//		wrapid.SetActiveRecursively(false);
 		wBounceRevolver.SetActiveRecursively(false);
 		wUCriflebullet.SetActiveRecursively(false);
 		wburner.SetActiveRecursively(false);
